@@ -70,6 +70,7 @@ class InventoryController(
             nurApi.setupSelectedAntenna = NurApi.ANTENNAID_AUTOSELECT
         }
         //prepareDataInventory()
+        localTagStorage.clear()
         isInventoryRunning = true
         nurApi.startInventoryStream()
         inventoryListener.inventoryStateChanged()
