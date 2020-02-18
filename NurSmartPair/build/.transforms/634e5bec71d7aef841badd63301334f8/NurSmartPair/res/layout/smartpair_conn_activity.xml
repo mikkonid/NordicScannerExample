@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="320dp"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+
+    <ProgressBar
+        android:id="@+id/smartpair_conn_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/smartpair_progressbar_bg"
+        android:indeterminate="false"
+        android:indeterminateDrawable="@drawable/smartpair_progressbar_indeterminate"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/smartpair_progressbar"
+        android:saveEnabled="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/smartpair_conn_devicon"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/smartpair_bticon">
+
+            <requestFocus />
+        </ImageView>
+
+        <EditText
+            android:id="@+id/smartpair_conn_text"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center_horizontal"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:maxLines="2"
+            android:minHeight="30sp"
+            android:text="Searching bluetooth device.."
+            android:textSize="14sp"
+            android:textStyle="bold">
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+</RelativeLayout>

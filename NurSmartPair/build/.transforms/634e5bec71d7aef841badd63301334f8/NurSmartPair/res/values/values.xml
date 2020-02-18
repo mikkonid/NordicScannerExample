@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="smartpair">Nordic ID Smart Pair</string>
+    <style name="smartpair_circular_theme" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@drawable/smartpair_round</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

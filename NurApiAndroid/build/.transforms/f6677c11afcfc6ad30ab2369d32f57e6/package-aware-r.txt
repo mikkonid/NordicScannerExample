@@ -1,0 +1,20 @@
+com.nordicid.nurapi
+id address
+id btn_cancel
+id name
+id new_devices
+id paired
+id rssi
+id scan_progress
+id title_devices
+layout device_element
+layout device_list
+string app_name
+string ble_not_supported
+string select_device
+string text_bt_not_on
+string text_cancel
+string text_location_not_on
+string text_paired
+string text_scan
+string text_scanning

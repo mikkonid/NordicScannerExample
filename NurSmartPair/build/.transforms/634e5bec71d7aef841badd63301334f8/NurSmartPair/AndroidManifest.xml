@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="smartpair.nordicid.com.smartpairlib"
+    android:versionCode="5"
+    android:versionName="1.0.5" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="26" />
+
+    <application>
+        <activity
+            android:name="com.nordicid.smartpair.SmartPairConnActivity"
+            android:label="@string/smartpair"
+            android:theme="@style/smartpair_circular_theme" >
+        </activity>
+        <activity
+            android:name="com.nordicid.smartpair.SmartPairConnActivityWear"
+            android:label="@string/smartpair" >
+        </activity>
+    </application>
+
+</manifest>

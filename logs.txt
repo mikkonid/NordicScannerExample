@@ -1,0 +1,45 @@
+
+08:34:21.076 D/BluetoothGatt: onClientConnectionState() - status=34 clientIf=8 device=00:21:AD:14:00:8E
+08:34:21.076 I/UartService: onConnectionStateChange -> "DISCONNECTED"
+08:34:21.076 W/NurApiBLEAutoConnect: onConnStateChanged 0; com.nordicid.nurapi.UartService@3af7cb8a
+08:34:21.076 W/NurApiBLEAutoConnect: disconnect
+08:34:21.088 I/NurApiBLETransport: disconnect OK
+08:34:21.091 W/NurApiBLEAutoConnect: onConnStateChanged done 0
+08:34:21.091 D/UartService: connect addr 00:21:AD:14:00:8E; mContext com.example.nordicscanner.MainActivity@18440a12
+08:34:21.093 I/BleScanner: scanDevices() mOwner com.example.nordicscanner.MainActivity@18440a12
+08:34:21.095 I/BleScanner: onScanStarted() mScanning false
+08:34:21.115 D/BluetoothLeScanner: onClientRegistered() - status=0 clientIf=7
+08:34:21.121 D/UartService: started device scan
+08:34:21.121 I/UartService: Disconnected from GATT server.
+08:34:41.096 I/BleScanner: onScanFinished() mScanning true; mListeners 0
+08:34:41.102 I/BleScanner: onScanFinished() restart scan
+08:34:41.602 I/BleScanner: onScanStarted() mScanning false
+08:34:41.617 D/BluetoothLeScanner: onClientRegistered() - status=0 clientIf=7
+08:34:42.698 D/UartService: onDeviceFound() ADDR MATCH; mConnectionState 0
+08:34:42.698 D/UartService: connectInternal() 00:21:AD:14:00:8E
+08:34:42.698 W/NurApiBLEAutoConnect: onConnStateChanged 1; com.nordicid.nurapi.UartService@3af7cb8a
+08:34:42.698 W/NurApiBLEAutoConnect: onConnStateChanged done 1
+08:34:42.798 W/UartService: connect 00:21:AD:14:00:8E
+08:34:42.798 D/BluetoothGatt: cancelOpen() - device: 00:21:AD:14:00:8E
+08:34:42.800 D/BluetoothGatt: close()
+08:34:42.800 D/BluetoothGatt: unregisterApp() - mClientIf=8
+08:34:42.802 I/UartService: Trying to create a new connection
+08:34:42.803 D/BluetoothGatt: connect() - device: 00:21:AD:14:00:8E, auto: false
+08:34:42.803 D/BluetoothGatt: registerApp()
+08:34:42.803 D/BluetoothGatt: registerApp() - UUID=4decb314-3c5e-4a84-ba29-9c2fefef5375
+08:34:42.807 D/BluetoothGatt: onClientRegistered() - status=0 clientIf=8
+08:34:42.807 I/UartService: Connection created
+08:34:43.281 D/BluetoothGatt: onClientConnectionState() - status=0 clientIf=8 device=00:21:AD:14:00:8E
+08:34:43.281 I/UartService: onConnectionStateChange -> "CONNECTED"
+08:34:43.281 I/UartService: Attempting to start service discovery
+08:34:43.382 W/UartService: start discoverServices
+08:34:43.382 D/BluetoothGatt: discoverServices() - device: 00:21:AD:14:00:8E
+08:34:43.388 D/BluetoothGatt: onSearchComplete() = Device=00:21:AD:14:00:8E Status=0
+08:34:43.388 W/UartService: onServicesDiscovered; status 0
+08:34:43.388 D/BluetoothGatt: setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
+08:34:43.391 I/UartService: CONNECTED
+08:34:43.391 W/NurApiBLEAutoConnect: onConnStateChanged 2; com.nordicid.nurapi.UartService@3af7cb8a
+08:34:43.392 W/NurApiBLEAutoConnect: onConnStateChanged done 2
+08:34:44.392 D/NurApiBLEAutoConnect: ConnectApiRunnable; mService com.nordicid.nurapi.UartService@3af7cb8a
+08:34:44.394 W/NurApiBLEAutoConnect: connect
+08:34:44.394 I/NurApiBLETransport: connect OK
