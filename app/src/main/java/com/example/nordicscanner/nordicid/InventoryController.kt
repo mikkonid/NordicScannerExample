@@ -5,7 +5,7 @@ import com.nordicid.nurapi.*
 private var DataWords = 2
 
 interface InventoryControllerListener {
-    fun tagFound(tag: NurTag, isNew: Boolean)
+    fun tagFound(tag: NurTag, seenCount: Int)
     fun readerDisconnected()
     fun readerConnected()
     fun inventoryStateChanged()
@@ -20,41 +20,33 @@ class InventoryController(
         private set
 
     val nurApiListener = createNurApiListener()
-    private val tagStorage = NurTagStorage()
+    //private val tagStorage = NurTagStorage()
+
+    private val localTagStorage = mutableMapOf<String, Int?>()
 
     fun handleInventoryResult() {
         synchronized(nurApi.storage) {
             var tmp: HashMap<String, String>
             val tagStorage = nurApi.storage
-            // Add tags tp internal tag storage
+            // Add tags from nurapi storage to internal tag storage
             for (i in 0 until tagStorage.size()) {
                 var tag = tagStorage[i]
-                if (tagStorage.addTag(tag)) {
-                    tmp = HashMap()
-                    // Add new
-                    tmp["epc"] = tag.epcString
-                    tmp["rssi"] = tag.rssi.toString()
-                    tmp["timestamp"] = tag.timestamp.toString()
-                    tmp["freq"] = tag.freq.toString() + " kHz Ch: " + tag.channel.toString()
-                    tmp["found"] = "1"
-                    tag.userdata = tmp
-                    inventoryListener.tagFound(tag, true)
-                } else { // Update
-                    tag = tagStorage.getTag(tag.epc)
-                    tmp = tag.userdata as? HashMap<String, String>
-                        ?: HashMap<String, String>().also { tag.userdata = it }
-                    tmp["rssi"] = tag.rssi.toString()
-                    tmp["timestamp"] = tag.timestamp.toString()
-                    tmp["freq"] = tag.freq.toString() + " kHz (Ch: " + tag.channel.toString() + ")"
-                    tmp["found"] = tag.updateCount.toString()
-                    inventoryListener.tagFound(tag, false)
+                if (!localTagStorage.containsKey(tag.epcString)) {
+                    // New
+                    localTagStorage[tag.epcString] = 1;
+                } else {
+                    // Updated
+                    localTagStorage[tag.epcString] = localTagStorage[tag.epcString]?.plus(1)
                 }
+
+                localTagStorage[tag.epcString]?.let { inventoryListener.tagFound(tag, it) }
             }
+
             tagStorage.clear()
         }
     }
 
-    private fun prepareDataInventory() {
+    /*private fun prepareDataInventory() {
         val irConfig = NurIRConfig()
         irConfig.IsRunning = false
         irConfig.irType = NurApi.IRTYPE_EPCDATA
@@ -65,19 +57,19 @@ class InventoryController(
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
-    }
+    }*/
 
     fun startContinuousInventory(): Boolean {
         if (!nurApi.isConnected) return false
         // Enable inventory stream zero reading report
-        if (nurApi.setupOpFlags and NurApi.OPFLAGS_INVSTREAM_ZEROS == 0) {
+        /*if (nurApi.setupOpFlags and NurApi.OPFLAGS_INVSTREAM_ZEROS == 0) {
             nurApi.setupOpFlags = nurApi.setupOpFlags or NurApi.OPFLAGS_INVSTREAM_ZEROS
-        }
+        }*/
         // Make sure antenna autoswitch is enabled
         if (nurApi.setupSelectedAntenna != NurApi.ANTENNAID_AUTOSELECT) {
             nurApi.setupSelectedAntenna = NurApi.ANTENNAID_AUTOSELECT
         }
-        prepareDataInventory()
+        //prepareDataInventory()
         isInventoryRunning = true
         nurApi.startInventoryStream()
         inventoryListener.inventoryStateChanged()
@@ -89,10 +81,11 @@ class InventoryController(
             isInventoryRunning = false
             if (nurApi.isConnected) {
                 nurApi.stopInventoryStream()
-                val ir = NurIRConfig()
+                /*val ir = NurIRConfig()
                 ir.IsRunning = false
                 nurApi.irConfig = ir
                 nurApi.setupOpFlags = nurApi.setupOpFlags and NurApi.OPFLAGS_INVSTREAM_ZEROS.inv()
+                 */
             }
         } catch (err: Exception) {
             err.printStackTrace()
