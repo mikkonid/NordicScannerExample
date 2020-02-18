@@ -1,8 +1,13 @@
 package com.example.nordicscanner
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.nordicscanner.nordicid.*
 import com.nordicid.nurapi.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,8 +19,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val inventoryController = InventoryController(nurApi, createInventoryListener())
     private val barcodeScanner = BarcodeScanner(nurApi, createBarcodeListener())
 
+    private val RECORD_REQUEST_CODE = 101
+
+    // ML exa addr: 00:21:ad:13:00:ec
+
+    private fun setupLocationPermissions() {
+        val permission = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.i("MainActivity", "Location permission denied, requesting permissions")
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    RECORD_REQUEST_CODE)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupLocationPermissions()
 
         BleScanner.init(this)
         nurApi.listener = createNurApiListener()
@@ -103,12 +126,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun createInventoryListener() = object : InventoryControllerListener {
         private val cache = HashMap<String, NurTag>()
 
-        override fun tagFound(tag: NurTag, isNew: Boolean) {
-            if (!cache.containsKey(tag.epcString)) {
+        override fun tagFound(tag: NurTag, seenCount: Int) {
+            if (cache.containsKey(tag.epcString)) {
             }
             cache[tag.epcString] = tag
             runOnUiThread {
-                labelStatus.text = "${labelStatus.text}\nTagFound: ${tag.print()}, isNew: $isNew"
+                labelStatus.text = "${labelStatus.text}\nTagFound: ${tag.print()}, seenCount: $seenCount"
             }
         }
 
